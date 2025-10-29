@@ -1,0 +1,672 @@
+<template>
+  <div>
+    <!-- <div class="particles-container" style="position: absolute;z-index: 999;">
+    <BannerParticles/>
+    </div> -->
+    <!-- 首頁區塊 -->
+    <HeroSection :showButtons="false" @show-drawer="handleShowDrawer" @change-en="handleLanguageChange" />
+    <BannerParticles/>
+
+    <!-- 全域角落按鈕，出現在所有區塊上方 -->
+    <div class="global-corner-btns" :class="[{ en: isEnglish }, { expanded: showAllButtons }]">
+      <!-- 四顆目標按鈕（預設疊在MENU處，展開時飛向角落） -->
+      <button class="corner-btn target top-left" @mouseenter="handleShowDrawer('schedule')">
+        <span class="btn-zh">{{ isEnglish ? 'SCHEDULE' : '場次表' }}</span>
+      </button>
+      <button class="corner-btn target top-right" @click="handleLanguageChange(!isEnglish)">
+        <span class="btn-zh">{{ isEnglish ? '中文' : 'EN' }}</span>
+      </button>
+      <button class="corner-btn target bottom-left" @mouseenter="handleShowDrawer('lecture')">
+        <span class="btn-zh">{{ isEnglish ? 'INFO' : '入場須知' }}</span>
+      </button>
+      <button class="corner-btn target bottom-right" @click="handleShowDrawer('about')">
+        <span class="btn-zh">{{ isEnglish ? 'ABOUT' : '關於我們' }}</span>
+      </button>
+
+      <!-- MENU 啟動按鈕 -->
+      <button class="corner-btn launcher bottom-right" @click="showAllButtons = true">
+        <span class="btn-zh">{{ isEnglish ? 'MENU' : '選單' }}</span>
+      </button>
+    </div>
+
+    <!-- <Banner/> -->
+
+    <!-- 節目時間表區塊 -->
+    <!-- <ScheduleSection /> -->
+
+    <!-- 2025年11月日曆區塊 -->
+    <!-- <CalendarSection /> -->
+
+    <!-- 固定背景區域 -->
+    <FixedSection :isEnglish="isEnglish" />
+
+    <!-- 關於區塊 -->
+    <AboutSection :firstImage="firstImage" :isEnglish="isEnglish" />
+
+    <!-- DOME視頻橫幅 -->
+    <VideoBanner />
+
+    <!-- 作品集區塊 -->
+    <PortfolioSection :portfolioList="portfolioList" :isEnglish="isEnglish" />
+
+    <!-- 製作團隊區塊 -->
+    <TeamSection :isEnglish="isEnglish" />
+
+    <!-- 頁腳 -->
+    <FooterBar />
+
+    <!-- 抽屜組件 -->
+    <Drawers 
+      :showLiveDrawer="showLiveDrawer"
+      :showDrawer="showDrawer"
+      :showLectureDrawer="showLectureDrawer"
+      :currentEventImage="currentEventImage"
+      :isEnglish="isEnglish"
+      @close-drawer="handleCloseDrawer"
+      @event-type-changed="handleEventTypeChange"
+    />
+  </div>
+</template>
+
+<script>
+import BannerParticles from './BannerParticles.vue';
+import FooterBar from './FooterBar.vue';
+import HeroSection from './HeroSection.vue';
+// import ScheduleSection from './ScheduleSection.vue';
+// import CalendarSection from './CalendarSection.vue';
+import FixedSection from './FixedSection.vue';
+import AboutSection from './AboutSection.vue';
+import VideoBanner from './VideoBanner.vue';
+import PortfolioSection from './PortfolioSection.vue';
+import TeamSection from './TeamSection.vue';
+import Drawers from './Drawers.vue';
+import axios from 'axios';
+import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+import img1 from '../assets/1.jpg';
+import img2 from '../assets/2.jpg';
+import img3 from '../assets/3.jpg';
+
+gsap.registerPlugin(SplitText, ScrollTrigger);
+
+export default {
+  name: 'MainSection',
+  components: { 
+    BannerParticles,
+    FooterBar, 
+    HeroSection,
+    // ScheduleSection,
+    // CalendarSection,
+    FixedSection,
+    AboutSection,
+    VideoBanner,
+    PortfolioSection,
+    TeamSection,
+    Drawers
+  },
+  data() {
+    return {
+      testdata: [],
+      firstImage: {},
+      form: {
+        name: '',
+        email: '',
+        message: ''
+      },
+      showLiveDrawer: false,
+      showDrawer: false,
+      showLectureDrawer: false,
+      currentEventType: 'exhibition',
+      portfolioList: [],
+      isEnglish: false,
+      showAllButtons: false,
+    }
+  },
+  computed: {
+    currentEventImage() {
+      const imageMap = {
+        'exhibition': img1,
+        'workshop': img2,
+        'performance': img3
+      };
+      return imageMap[this.currentEventType] || img1;
+    }
+  },
+  mounted() {
+    this.initLanguage();
+    // 手機版預設顯示四顆按鈕，並監聽視窗尺寸變化
+    const setByWidth = () => {
+      if (window.innerWidth <= 768) {
+        this.showAllButtons = true;
+      } else {
+        this.showAllButtons = false;
+      }
+    };
+    setByWidth();
+    window.addEventListener('resize', setByWidth);
+
+    this.fetchData();
+    this.initTextAnimation();
+    this.initSunAnimation();
+    this.initCloud1Animation();
+    this.initCloud2Animation();
+    this.initServicesSliderScroll();
+  },
+  methods: {
+    initLanguage() {
+      try {
+        const savedLang = localStorage.getItem("lang");
+        if (savedLang === "en") {
+          this.isEnglish = true;
+        } else if (savedLang === "zh") {
+          this.isEnglish = false;
+        }
+        console.log("Initial language set to:", this.isEnglish ? "English" : "Chinese");
+      } catch (e) {
+        console.warn("Failed to read language from localStorage:", e);
+      }
+    },
+    async fetchData() {
+      try {
+        const response1 = await axios.get('https://unzip-clab-api.clab.org.tw/api/v1/schedules/5/works?page=0&limit=25', {responseType: 'json'});
+        this.testdata = response1.data.results[1].photo_1;
+        this.firstImage = this.testdata;
+
+        const response2 = await axios.get('https://unzip-clab-api.clab.org.tw/api/v1/schedules/3/works?page=0&limit=10', {responseType: 'json'});
+        this.portfolioList = response2.data.results;
+
+        await this.fetchDatabaseData();
+      } catch (error) {
+        console.error('獲取資料失敗:', error);
+      }
+    },
+
+    handleShowDrawer(drawerType) {
+      this.showLiveDrawer = false;
+      this.showDrawer = false;
+      this.showLectureDrawer = false;
+
+      switch (drawerType) {
+        case 'schedule':
+          this.showDrawer = true;
+          break;
+        case 'about':
+          this.showLiveDrawer = true;
+          break;
+        case 'lecture':
+          this.showLectureDrawer = true;
+          break;
+      }
+    },
+
+    handleCloseDrawer(drawerType) {
+      switch (drawerType) {
+        case 'schedule':
+          this.showDrawer = false;
+          break;
+        case 'about':
+          this.showLiveDrawer = false;
+          break;
+        case 'lecture':
+          this.showLectureDrawer = false;
+          break;
+      }
+    },
+
+    handleEventTypeChange(eventType) {
+      this.currentEventType = eventType;
+    },
+
+    handleLanguageChange(isEnglish) {
+      console.log('Language changed to:', isEnglish ? 'English' : 'Chinese');
+      this.isEnglish = isEnglish;
+      console.log('MainSection isEnglish is now:', this.isEnglish);
+      try {
+        localStorage.setItem('lang', isEnglish ? 'en' : 'zh');
+      } catch (e) {
+        console.warn('Failed to persist language:', e);
+      }
+    },
+
+    async fetchDatabaseData() {
+      try {
+        const response = await axios.get('http://localhost:3001/api/data');
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.error('❌ 取得資料庫資料失敗:', error);
+        return [];
+      }
+    },
+
+    scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+
+    submitForm() {
+      alert('感謝您的訊息！我們會盡快回覆您。');
+      this.form = { name: '', email: '', message: '' };
+    },
+
+    initTextAnimation() {
+      const splitTitle = document.querySelector('.split')
+      if (splitTitle) {
+        const splitText = new SplitText(splitTitle, {
+          type: "chars, words",
+          charsClass: "char",
+          wordsClass: "word"
+        })
+        gsap.set(splitText.chars, {
+          opacity: 0,
+          y: 50,
+          rotationX: -90
+        })
+        gsap.to(splitText.chars, {
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          duration: 0.8,
+          stagger: 0.05,
+          ease: "back.out(1.7)"
+        })
+      }
+
+      const heroTitle = document.querySelector('.hero-title')
+      if (heroTitle) {
+        const splitTitle = new SplitText(heroTitle, {
+          type: "chars, words",
+          charsClass: "char",
+          wordsClass: "word"
+        })
+        gsap.set(splitTitle.chars, {
+          opacity: 0,
+          y: 50,
+          rotationX: -90
+        })
+        gsap.to(splitTitle.chars, {
+          opacity: 1,
+          y: 0,
+          rotationX: 0,
+          duration: 0.8,
+          stagger: 0.05,
+          ease: "back.out(1.7)"
+        })
+      }
+
+      const heroSubtitle = document.querySelector('.hero-subtitle')
+      if (heroSubtitle) {
+        const splitSubtitle = new SplitText(heroSubtitle, {
+          type: "words",
+          wordsClass: "word"
+        })
+        gsap.set(splitSubtitle.words, {
+          opacity: 0,
+          y: 30
+        })
+        gsap.to(splitSubtitle.words, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          delay: 0.5,
+          ease: "power2.out"
+        })
+      }
+
+      gsap.fromTo('#schedule .section-title, #schedule .schedule-table', 
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out",
+          scrollTrigger: { trigger: "#schedule", start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse" }
+        }
+      )
+
+      gsap.fromTo('#portfolio .section-title, #portfolio .portfolio-item', 
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power2.out",
+          scrollTrigger: { trigger: "#portfolio", start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse" }
+        }
+      )
+
+      gsap.fromTo('#team .section-title, #team .team-item', 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: "#team", start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse" }
+        }
+      )
+    },
+
+    initSunAnimation() {
+      if (!this.$refs.sunImg) return;
+      gsap.set(this.$refs.sunImg, { y: '100%', opacity: 1 });
+      gsap.to(this.$refs.sunImg, { y: '0%', repeat: 0, yoyo: true, opacity: 1, duration: 2, ease: "power2.Out" });
+    },
+
+    initCloud1Animation() {
+      if (!this.$refs.cloud1Img) return;
+      gsap.set(this.$refs.cloud1Img, { y: '100%', opacity: 1 });
+      gsap.to(this.$refs.cloud1Img, { y: '0%', opacity: 1, duration: 4, ease: "power2.out" });
+    },
+
+    initCloud2Animation() {
+      if (!this.$refs.cloud2Img) return;
+      gsap.set(this.$refs.cloud2Img, { y: '100%', opacity: 1 });
+      gsap.to(this.$refs.cloud2Img, { y: '0%', opacity: 1, duration: 3, ease: "power2.out" });
+    },
+
+    scrollServices(direction) {
+      const slider = this.$refs.servicesSlider;
+      const card = slider?.querySelector?.('.service-card');
+      if (slider && card) {
+        const scrollAmount = card.offsetWidth + 24;
+        slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+      }
+    },
+
+    initServicesSliderScroll() {
+      this.$nextTick(() => {
+        const slider = this.$refs.servicesSlider;
+        if (!slider) return;
+        const container = slider.parentElement;
+        const cardWidth = 320;
+        const gap = 24;
+        const containerPadding = 40;
+        const availableWidth = container.offsetWidth - containerPadding;
+        const cardsPerView = Math.floor(availableWidth / (cardWidth + gap));
+        const totalCards = slider.children.length;
+        const maxScroll = Math.max(0, (totalCards - cardsPerView) * (cardWidth + gap));
+        if (maxScroll <= 0) return;
+        gsap.set(slider, { x: 0 });
+        gsap.to(slider, { x: -maxScroll, ease: 'none',
+          scrollTrigger: { trigger: '#services', start: 'top top', end: '+=' + maxScroll, scrub: 1.2, pin: true, anticipatePin: 1, markers: true }
+        });
+      });
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+$body-font:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+body {
+  background: #181818;
+  color: #fff;
+  font-family:$body-font;
+  line-height: 1.6;
+  margin: 0 !important;
+}
+
+h1{
+  font-size:8vw;
+  font-family: 'Syncopate',sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px 120px;
+  color: #fff;
+}
+
+section {
+  background: transparent;
+  color: #fff;
+}
+
+.about {
+  background: #fff;
+  color: #111;
+}
+
+.about .section-title,
+.about .about-text,
+.about .about-stats,
+.about .stat-item,
+.about .stat-item h3 {
+  color: #111;
+}
+
+.services {
+  background: #ecebe7;
+  color: #fff;
+}
+
+.portfolio {
+  background: #232526;
+  color: #fff;
+}
+
+.contact {
+  background: #181818;
+  color: #fff;
+}
+
+.team {
+  background: #232526;
+  color: #fff;
+}
+
+.schedule {
+  background: #181818;
+  color: #fff;
+}
+
+.schedule-table {
+  background: #fff;
+  color: #111;
+}
+
+.schedule-table th, .schedule-table td {
+  color: #111;
+}
+
+.schedule-table th {
+  background: #f5f5f5;
+  color: #111;
+  border-bottom: 2px solid #333;
+}
+
+.schedule-table tr:not(:last-child) td {
+  border-bottom: 1px solid #eee;
+}
+
+.schedule-table tr:hover td {
+  background: #f0f0f0;
+  color: #111;
+}
+
+.stat-item {
+  background: #181818;
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.service-card {
+  background: #232526;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.contact-form {
+  background: #232526;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.team-content{
+  position: relative;
+  padding: 5em 2em 2em 2em; 
+  backdrop-filter: blur(10px);
+}
+
+.team-list {
+  background: transparent;
+  color: #fff;
+}
+
+.team-item {
+  background: #000000;
+  color: #bbb;
+  border-left: 4px solid #fff;
+  font-size: 1rem;
+}
+
+.team-role {
+  font-weight: 700;
+  color: #111;
+  margin-right: 8px;
+}
+
+.footer-bar {
+  background: #111;
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  background: #181818;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+  .schedule-table th, .schedule-table td {
+    padding: 12px 8px;
+    font-size: 0.95rem;
+  }
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card,
+  .contact-form {
+    padding: 30px 20px;
+  }
+}
+
+.char { display: inline-block; transform-origin: center; }
+.word { display: inline-block; margin-right: 0.2em; }
+.hero-title, .hero-subtitle, .split { white-space: nowrap; overflow: hidden; }
+.split { font-size: 3.5rem; font-weight: bold; margin-bottom: 20px; color: #fff; }
+@media (max-width: 768px) {
+  .hero-title, .hero-subtitle, .split { white-space: normal; }
+  .split { font-size: 2.5rem; }
+}
+
+.global-corner-btns {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  --btn: 5em;
+}
+.global-corner-btns .corner-btn {
+  position: absolute;
+  width: var(--btn);
+  height: var(--btn);
+  border-radius: 50%;
+  background:black;
+  color: white;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.9s cubic-bezier(.2,.8,.2,1), opacity 0.5s ease;
+  pointer-events: auto;
+}
+
+/* 初始：所有 target 按鈕疊在 MENU（右下角），縮小且隱藏 */
+.global-corner-btns .target {
+  bottom: 24px; right: 24px;
+  transform: translate(0, 0) scale(0);
+  opacity: 0;
+}
+
+/* 展開時：從 MENU 飛向角落 */
+.global-corner-btns.expanded .target { opacity: 1; transform: scale(1); }
+.global-corner-btns.expanded .target.top-left    { transform: translate(calc(-100vw + var(--btn) + 48px), calc(-100vh + var(--btn) + 48px)) scale(1); }
+.global-corner-btns.expanded .target.top-right   { transform: translate(0, calc(-100vh + var(--btn) + 48px)) scale(1); }
+.global-corner-btns.expanded .target.bottom-left { transform: translate(calc(-100vw + var(--btn) + 48px), 0) scale(1); }
+/* bottom-right 留在原地，僅從 scale(0)->scale(1) */
+
+/* MENU 按鈕在展開後淡出且不可點擊 */
+.global-corner-btns .launcher { bottom: 24px; right: 24px; }
+.global-corner-btns.expanded .launcher { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+
+.global-corner-btns .corner-btn span {
+  display: block;
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 英文長字時縮小字級，確保完全顯示 */
+.global-corner-btns.en .top-left span {
+  font-size: 0.72em;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .global-corner-btns{
+    position: fixed;
+    --btn: 80px;
+  }
+  .global-corner-btns .corner-btn {
+    font-size: 15px;
+    padding: 0 6px;
+  }
+  /* 在手機上直接顯示四顆就位，避免大位移動畫造成突兀 */
+  .global-corner-btns .target,
+  .global-corner-btns.expanded .target { transform: none; opacity: 1; }
+  .global-corner-btns .top-left    { bottom: 32px; left:110px;right: auto;}
+  .global-corner-btns .top-right   { bottom: 32px; left:20px; right: auto;}
+  .global-corner-btns .bottom-left { bottom: 32px; left: 200px; right: auto;}
+  .global-corner-btns .bottom-right{ bottom: 32px; left: 290px; right: auto;}
+  .global-corner-btns.expanded .target.top-left {
+    transform: none;
+  }
+  .global-corner-btns.expanded .target.top-right {
+    transform: none;
+  }
+  .global-corner-btns.expanded .target.bottom-left { 
+    transform:none }
+  .global-corner-btns .launcher { display: none; }
+}
+@media (min-width: 2560px){
+  .global-corner-btns{
+    --btn:250px;
+  }
+  .global-corner-btns .corner-btn{
+    font-size: 3em;
+  }
+}
+</style> 
