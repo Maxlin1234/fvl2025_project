@@ -180,6 +180,11 @@ export default {
       if (titleZh.includes('簡單映相')) {
         return 4;
       }
+      // 特例 X：「殘構重生」 → 顯示「黑川良一」
+      if (titleZh.includes('殘構重生')) {
+        const idx = findArtistIndexByZhName('黑川良一');
+        return idx >= 0 ? idx : null;
+      }
       // 特例 4：thewhole → 僅顯示「謝杰樺 × 安娜琪舞蹈劇場」
       if (titleAllLower.includes('thewhole')) {
         const idx = findArtistIndexByZhName('謝杰樺 × 安娜琪舞蹈劇場');
@@ -203,6 +208,14 @@ export default {
         const indices = [a, b].filter(i => typeof i === 'number' && i >= 0);
         if (indices.length === 2) return indices;
       }
+
+  // 規則 B：「赫圖比斯：混沌的協奏」 → Normal Studio × 嬉皮萬歲
+  if (titleZh.includes('赫圖比斯') || titleZh.includes('混沌的協奏')) {
+    const a = findArtistIndexByZhName('Normal Studio');
+    const b = findArtistIndexByZhName('嬉皮萬歲');
+    const indices = [a, b].filter(i => typeof i === 'number' && i >= 0);
+    if (indices.length === 2) return indices;
+  }
       return null;
     });
 

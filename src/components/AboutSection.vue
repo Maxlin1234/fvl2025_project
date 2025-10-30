@@ -78,7 +78,9 @@ export default {
 }
 
 .about-text.en p {
-  letter-spacing: 0.1px;
+  text-align: left;           /* 英文齊左 */
+  text-justify: auto;         /* 取消英文分散對齊 */
+  letter-spacing: 0px;        /* 英文字距更緊密 */
 }
 
 .about-text h2 {
@@ -99,6 +101,16 @@ export default {
   .about-content {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  /* 手機版：英文段落左右齊行對齊，並啟用自動斷詞避免大空白 */
+  .about-text.en p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    word-break: normal;
   }
 }
 @media (min-width: 2560px){

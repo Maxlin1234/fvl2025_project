@@ -1,7 +1,7 @@
 <template>
   <div class="particles" ref="threeContainer" id="container">
     <div class="mobile">
-      <img src="../assets/2025banner.jpg">
+      <img src="../assets/2025banner.jpg" loading="lazy">
     </div>
 
    

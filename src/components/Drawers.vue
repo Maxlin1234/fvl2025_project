@@ -60,27 +60,42 @@
   <!-- 講座 Drawer 結構 -->
   <div class="lecture-drawer" :class="{ open: showLectureDrawer }">
     <button class="drawer-close" @click="$emit('close-drawer', 'lecture')">×</button>
-    <!-- <div class="logo-contain" style="width: 100vw;height: auto;display:flex;justify-content: center;">
-      <img src="../assets/fvl_logo.png" style="width:120px;position: absolute;z-index: 999;left: 0;top:5%;">
-    </div> -->
-
+ 
     <div class="drawer-content" style="background-color:black;color:white;">
-      <video autoplay muted loop src="../assets/circle.mp4" style="position: absolute;z-index: 1;right:0%;width:100%;height:100%; float: left;clip-path: ellipse(70% 80% at 100% 30%);opacity: 0.5;object-fit:cover;"></video>
+      <video
+  ref="lectureVideo"
+  autoplay
+  muted
+  loop
+  playsinline
+  webkit-playsinline
+  x5-playsinline
+  preload="auto"
+  style="
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: cover;
+    opacity: 0.5;
+    /* 暫時移除 clip-path 測試 */
+    /* clip-path: ellipse(70% 80% at 100% 30%); */
+  "
+>
+  <source src="../assets/circle.mp4" type="video/mp4">
+  您的瀏覽器不支援影片播放。
+</video>
+      <!-- <video autoplay muted loop src="../assets/circle.mp4" style="position: absolute;z-index: 1;right:0%;width:100%;height:100%; float: left;clip-path: ellipse(70% 80% at 100% 30%);opacity: 0.5;object-fit:cover;"></video> -->
       <div class="all-content" style="position: absolute;z-index: 999;height: 100%;width: 100%; flex-direction: column;display: flex;justify-content: center;align-items:flex-start;">
         <h2 style="color:gainsboro;border-bottom: 2px solid white;padding: 20px;margin-left: 40px;">{{ isEnglish ? 'Visitor Guidelines' : '入場須知' }}</h2>
         <div class="list-text">
           <button class="list-btn1" @click="toggleContent()"><h2>{{ isEnglish ? ' Notices for entry ' : '注意事項' }}</h2></button>
-          <!-- <button class="list-btn2" @click="toggleContent2()">{{ isEnglish ? 'Photography Guidelines' : '攝錄影需知' }}</button> -->
           <button class="list-btn3" @click="toggleContent3()"><h2>{{ isEnglish ? 'Admission Information' : '索票資訊' }}</h2></button>
         </div>
         <div class="content-container">
           <div class="lecture-list" v-if="showContentA" style="font-size: 15px;">
-            <!-- <p>{{ isEnglish ? 
-              'Exhibitors, visitors, or personnel in the exhibition area who have the following circumstances and have not improved after being advised by the organizer, the organizer may refuse their entry or require the violator to leave, and prohibit re-entry into the exhibition hall without refund:' : 
-              '參展廠商、參觀者或展館區域內人員，有下列情形且經主辦單位勸導未改善者，主辦單位得拒絕其進場或要求違反者離場，並禁止再行進入展場，不予退費：' }}</p>
-            <p>{{ isEnglish ? 
-              '1. Violating public order or good customs, or affecting the image, hygiene and safety of the exhibition hall, or other behaviors that affect the order of the exhibition, including but not limited to the following behaviors:' : 
-              '1.違反公共秩序或善良風俗，或影響展場形象、衛生安全，或其他影響展覽秩序之行為，包含但不限於下列之行為：' }}</p> -->
             <h2>{{ isEnglish ? 
               '⭓ Some performances contain intense strobe lighting effects. Viewer discretion is advised.' : 
               '⭓ 演出內容有部分包含強烈閃光，敬請斟酌入場。' }}</h2>
@@ -96,21 +111,7 @@
             <h2>{{ isEnglish ? 
               '⭓ Programs may be subject to change.' : 
               '⭓ 主辦單位保有調整與變更活動之權利。' }}</h2>
-            <!-- <p>{{ isEnglish ? 
-              '(6) Other behaviors that affect the progress of the exhibition.' : 
-              '(6)其他影響展覽進行之行為。' }}</p>
-            <p>{{ isEnglish ? 
-              '2. Protests, petitions and other activities in the exhibition hall that affect the order and viewing quality of the exhibition hall.' : 
-              '2.於展館從事之抗議、陳情等活動，影響展場秩序及觀展品質。' }}</p>
-            <p>{{ isEnglish ? 
-              '3. Exhibitors or other personnel entering and leaving the exhibition hall refuse to enter according to the method stipulated by the organizer.' : 
-              '3.參展商或其他出入展場之人員拒絕依主辦單位規定之方式入場。' }}</p>
-            <p>{{ isEnglish ? 
-              '4. Personnel entering and leaving the exhibition hall use other people\'s identity documents or alter or forge identity documents.' : 
-              '4.出入展場相關人員使用他人身分證明文件或變造、偽造身分證明文件。' }}</p>
-            <p>{{ isEnglish ? 
-              '5. During the exhibition period from May 20 to May 23, persons under 18 years old are prohibited from entering to maintain the order and safety of the exhibition hall.' : 
-              '5.展覽期間5月20至5月23日，禁止18歲以下者入場，以維持展場秩序及安全' }}</p> -->
+    
           </div>
           <div class="lecture-list" v-if="showContentB" style="font-size: 15px;">
             <h2>{{ isEnglish ? 
@@ -199,9 +200,77 @@ export default {
   },
   mounted() {
     this.startCarousel();
+    // 行動裝置自動播放處理
+    const video = this.$refs.lectureVideo;
+    if (video) {
+      try {
+        video.muted = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.setAttribute('x5-playsinline', '');
+        video.setAttribute('preload', 'auto');
+        video.setAttribute('autoplay', '');
+        // 確保不顯示控制列，避免干擾自動播放
+        video.removeAttribute('controls');
+        video.controls = false;
+      } catch (err) {
+        console.warn('設定講座背景影片屬性時發生錯誤', err);
+      }
+
+      const tryPlay = () => {
+        try { video.load(); } catch (e) { console.warn('講座影片重新載入失敗', e); }
+        const p = video.play();
+        if (p && typeof p.then === 'function') {
+          p.catch((err) => {
+            console.log('講座背景影片自動播放被阻止:', err);
+          });
+        }
+      };
+
+      if (video.readyState >= 2) {
+        tryPlay();
+      } else {
+        video.addEventListener('canplay', tryPlay, { once: true });
+        setTimeout(tryPlay, 500);
+      }
+
+      // 使用者首次互動後再補嘗一次（若初次被阻擋）
+      const resumeOnGesture = () => {
+        if (video && video.paused) {
+          tryPlay();
+        }
+        window.removeEventListener('touchstart', resumeOnGesture, true);
+        window.removeEventListener('pointerdown', resumeOnGesture, true);
+        window.removeEventListener('scroll', resumeOnGesture, true);
+        window.removeEventListener('visibilitychange', onVis, true);
+      };
+      const onVis = () => { if (!document.hidden) resumeOnGesture(); };
+      window.addEventListener('touchstart', resumeOnGesture, true);
+      window.addEventListener('pointerdown', resumeOnGesture, true);
+      window.addEventListener('scroll', resumeOnGesture, true);
+      window.addEventListener('visibilitychange', onVis, true);
+
+      // 記錄清理函式
+      this._cleanupLectureVideo = () => {
+        try {
+          window.removeEventListener('touchstart', resumeOnGesture, true);
+          window.removeEventListener('pointerdown', resumeOnGesture, true);
+          window.removeEventListener('scroll', resumeOnGesture, true);
+          window.removeEventListener('visibilitychange', onVis, true);
+          video.removeEventListener('canplay', tryPlay, { once: true });
+        } catch (err) { console.warn('清理講座影片事件失敗', err); }
+      };
+    }
   },
   beforeUnmount() {
     this.stopCarousel();
+    if (this._cleanupLectureVideo) {
+      this._cleanupLectureVideo();
+      this._cleanupLectureVideo = null;
+    }
   },
   methods: {
     toggleContent() {

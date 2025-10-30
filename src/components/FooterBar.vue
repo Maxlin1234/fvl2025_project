@@ -1,7 +1,7 @@
 <template>
   <footer class="footer-bar">
     <div class="container">
-      <p>&copy; 2025 FUTURE VISION LAB. 版權所有。</p>
+      <p>&copy; TAIWAN CONTEMPORARY CULTURE  LAB. 版權所有。</p>
     </div>
   </footer>
 </template>

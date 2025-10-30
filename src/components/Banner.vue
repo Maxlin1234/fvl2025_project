@@ -11,7 +11,7 @@ export default {
     const container = this.$el;
 
     const loader = new THREE.TextureLoader();
-    loader.load(require('@/assets/banner_bk.jpg'), (texture) => {
+    loader.load(require('@/assets/banner_bk.jpeg'), (texture) => {
       initScene(texture);
     });
 
@@ -129,11 +129,18 @@ export default {
 </script>
 
 <style>
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 #imageContainer {
   position: relative;
   width: auto;
   height: 100vh;
   overflow: hidden;
+  overflow-x: hidden;
   /* object-fit: cover; */
 }
 

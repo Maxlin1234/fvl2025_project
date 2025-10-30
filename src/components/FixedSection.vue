@@ -1,7 +1,7 @@
 <template>
   <section id="fix-section" style="width: 100vw;background-color:#fff;position: relative;">
     <div class="title-box">
-      <h2 id="heading" style="color:black;">{{ isEnglish ? 'FUTURE VISION LAB 2025' : 'FUTURE VISION LAB 2025' }}</h2>
+      <h2 id="heading" style="color:black;">{{ isEnglish ? 'FUTURE VISION LAB    2025' : 'FUTURE VISION LAB 2025' }}</h2>
     </div>
     <div class="fix-bg"></div>
   </section>
@@ -45,7 +45,7 @@ export default {
    position:absolute;
    display: flex;
    justify-content: center;
-   font-size: 2em;
+   font-size: 1.5em;
    bottom: 0;
    left: 50%;
    width:50vw;
@@ -59,17 +59,26 @@ export default {
 .fix-bg {
   background-image: url("../assets/3.jpg");
   background-position: center;
-  min-height: 500px;
+  min-height:600px;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  background-size: cover;
-  height: 60vh;
+  background-size:cover;
+  height: auto;
   width: 100vw;
 }
 
 @media (max-width: 768px) {
 .title-box h2{
   font-size: 0.6em;
+}
+.fix-bg {
+  min-height:500px;
+  background-attachment:scroll;
+  background-position:center bottom;
+  background-repeat: no-repeat;
+  background-size:cover;
+  height:auto;
+  width: 100%;
 }
 }
 @media (min-width: 2560px){

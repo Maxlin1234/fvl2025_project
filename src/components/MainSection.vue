@@ -691,6 +691,7 @@ section {
 // 全域角落按鈕樣式
 .global-corner-btns {
   position: fixed;
+  top: 0;
   inset: 0;
   pointer-events: none;
   z-index: 1000;
@@ -775,33 +776,57 @@ section {
 // 響應式設計
 @media (max-width: 768px) {
   .global-corner-btns {
-    --btn: 80px;
+    --btn: 76px;
 
     .corner-btn {
-      font-size: 15px;
+      font-size: 13px;
       padding: 0 6px;
-    
-
-    // 手機版：定位四顆按鈕，但僅在展開時顯示
-    .target {
-      bottom: 32px;
-    }
-    .top-left    { left: 110px; right: auto; }
-    .top-right   { left: 20px;  right: auto; }
-    .bottom-left { left: 200px; right: auto; }
-    .bottom-right{ left: 290px; right: auto; }
-
-    // 僅在 expanded 時顯示目標按鈕
-    &.expanded .target { 
-      transform: none; 
-      opacity: 1; 
     }
 
-    // 手機版 MENU 保持可見（未展開時）
-    .launcher { 
-      display: block; 
+    /* 手機版：遵循展開/收合規則；未展開時收合於 MENU */
+
+    /* 四角定位，向內偏移並避開安全區域 */
+    .top-left {
+      top: calc(28px + env(safe-area-inset-top));
+      left: calc(16px + env(safe-area-inset-left));
+      right: auto;
+      bottom: auto;
     }
-  }
+    .top-right {
+      top: calc(28px + env(safe-area-inset-top));
+      right: calc(16px + env(safe-area-inset-right));
+      left: auto;
+      bottom: auto;
+    }
+    .bottom-left {
+      bottom: calc(28px + env(safe-area-inset-bottom));
+      left: calc(16px + env(safe-area-inset-left));
+      right: auto;
+      top: auto;
+    }
+    .bottom-right {
+      bottom: calc(28px + env(safe-area-inset-bottom));
+      right: calc(16px + env(safe-area-inset-right));
+      left: auto;
+      top: auto;
+    }
+
+    /* 僅在 expanded 時顯示四顆角落按鈕 */
+    &.expanded .target {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* 讓文字完整顯示，不省略；英文再縮小一點 */
+    .corner-btn span {
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: clip;
+    }
+    &.en .corner-btn span {
+      font-size: 0.78em;
+      letter-spacing: 0.4px;
+    }
   }
 
   .schedule-table th, 
