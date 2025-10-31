@@ -160,7 +160,9 @@ html, body {
   display: block;
   width: 100%;
   height: auto;
-  object-fit: cover;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
 }
 
 .banner-title {
@@ -174,11 +176,20 @@ html, body {
 
 .banner-title2 {
   width: 100%;
+  max-width: 100%;
   position: absolute;
   bottom: 5%;
   left: 0;
   z-index: 2;
   pointer-events: none;
+}
+
+.banner-title2 img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* 滑鼠特效 */

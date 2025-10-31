@@ -4,11 +4,24 @@
       <div class="team-content">
         <h2 class="section-title">{{ isEnglish ? 'Production Team' : '製作團隊' }}</h2>
 
-        <div class="team-rows">
-          <div v-for="(row, idx) in rows" :key="idx" class="row">
-            <div class="role">{{ isEnglish ? row.roleEn : row.roleZh }}</div>
-            <div class="sep">｜</div>
-            <div class="value" v-html="isEnglish ? row.valueEn || row.valueEn : row.valueZh"></div>
+        <div class="team-columns">
+          <!-- 左欄 -->
+          <div class="team-column left-column">
+            <div v-for="(row, idx) in leftColumn" :key="idx" class="row">
+              <template v-if="row.roleZh || row.roleEn">
+                <div class="role">{{ isEnglish ? row.roleEn : row.roleZh }}</div>
+                <div class="sep">｜</div>
+              </template>
+              <div class="value" :class="{ 'value-only': !row.roleZh && !row.roleEn }" v-html="isEnglish ? row.valueEn : row.valueZh"></div>
+            </div>
+          </div>
+          <!-- 右欄 -->
+          <div class="team-column right-column">
+            <div v-for="(row, idx) in rightColumn" :key="idx" class="row">
+              <div class="role">{{ isEnglish ? row.roleEn : row.roleZh }}</div>
+              <div class="sep">｜</div>
+              <div class="value" v-html="isEnglish ? row.valueEn : row.valueZh"></div>
+            </div>
           </div>
         </div>
 
@@ -92,27 +105,32 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      rows: [
-        { roleZh: '計畫主持人', roleEn: 'Project Principal', valueZh: '蔡奇宏',valueEn: 'Warrick TSAI ' },
-        { roleZh: '節目統籌', roleEn: 'Project Manager', valueZh: '廖苑喻、黃品慧',valueEn: 'Emma LIAO, Celine NG'},
-        { roleZh: '技術統籌', roleEn: 'Technical Director', valueZh: '蔡奇宏',valueEn: 'Warrick TSAI ' },
-        { roleZh: '技術執行', roleEn: 'Technical Coordinator', valueZh: '劉嘉昀',valueEn: 'LIU Chia-Yun ' },
-        { roleZh: '前期建築概念設計', roleEn: 'Preliminary Conceptual Design', valueZh: '陽明交通大學建築研究所 JHStudio',valueEn: 'JHStudio, Department of Architecture, National' },
-        { roleZh: '前期技術執行', roleEn: 'Preliminary Technical Coordinator', valueZh: '王竣恆',valueEn: 'Charles WANG' },
-        { roleZh: '建築協力', roleEn: 'Architectural Design and Fabrication', valueZh: 'achy_made',valueEn: 'achy_made' },
-        { roleZh: '聲場設計', roleEn: 'Sound Field Design', valueZh: 'C-LAB 臺灣聲響實驗室',valueEn: 'C-LAB Taiwan Sound Lab' },
-        { roleZh: '音響系統統籌', roleEn: 'Sound System Coordination', valueZh: '黑米創意工作室',valueEn: 'BlackRice Studio' },
-        { roleZh: '開場影像', roleEn: 'Opening Video Design', valueZh: '葉澈',valueEn: 'YEH Che' },
-        // { roleZh: '進場影像', roleEn: 'Entrance Visual', valueZh: '榊原澄人' },
-        { roleZh: '主視覺設計', roleEn: 'Key Vision Design', valueZh: '林羅伯',valueEn: 'Robert LIN'},
-        { roleZh: '網站設計', roleEn: 'Website Design', valueZh: '林瀚寬',valueEn: 'LIN Han-Kuan' },
-        { roleZh: '靜態攝影', roleEn: 'Photo Ducumentation', valueZh: '林軒朗',valueEn: 'LIN Hsuan-Lang' },
-        { roleZh: '動態攝影', roleEn: 'Video Ducumentation', valueZh: '異影業有限公司' ,valueEn: 'Un Studio Co., Ltd. '},
-        { roleZh: '前導影片剪輯', roleEn: 'Trailer Editing', valueZh: '浮石影像工作室',valueEn: 'FUSHIDA FILM STUDIO' },
-        // { roleZh: '翻譯', roleEn: 'Translation', valueZh: '高慧倩' }
-      ]
+  computed: {
+    // 左欄：10個項目（計畫主持人到音響系統統籌）
+    leftColumn() {
+      return [
+        { roleZh: '計畫主持人', roleEn: 'Project Principal', valueZh: '蔡奇宏', valueEn: 'Warrick TSAI' },
+        { roleZh: '節目統籌', roleEn: 'Project Manager', valueZh: '廖苑喻、黃品慧', valueEn: 'Emma LIAO, Celine NG' },
+        { roleZh: '技術統籌', roleEn: 'Technical Director', valueZh: '蔡奇宏', valueEn: 'Warrick TSAI' },
+        { roleZh: '技術執行', roleEn: 'Technical Coordinator', valueZh: '劉嘉昀', valueEn: 'LIU Chia-Yun' },
+        { roleZh: '前期建築概念設計', roleEn: 'Preliminary Conceptual Design', valueZh: '陽明交通大學建築研究所', valueEn: 'Department of Architecture, National' },
+        { roleZh: '', roleEn: '', valueZh: 'JHStudio', valueEn: 'JHStudio' },
+        { roleZh: '建築工程', roleEn: 'Architectural Engineering', valueZh: 'achy_made', valueEn: 'achy_made' },
+        { roleZh: '前期技術執行', roleEn: 'Preliminary Technical Coordinator', valueZh: '王竣恆', valueEn: 'Charles WANG' },
+        { roleZh: '聲場設計', roleEn: 'Sound Field Design', valueZh: 'C-LAB 臺灣聲響實驗室', valueEn: 'C-LAB Taiwan Sound Lab' },
+        { roleZh: '音響系統統籌', roleEn: 'Sound System Coordination', valueZh: '黑米創意工作室', valueEn: 'BlackRice Studio' }
+      ];
+    },
+    // 右欄：6個項目（開場影像到前導影片剪輯）
+    rightColumn() {
+      return [
+        { roleZh: '開場影像', roleEn: 'Opening Video Design', valueZh: '葉澈', valueEn: 'YEH Che' },
+        { roleZh: '主視覺設計', roleEn: 'Key Vision Design', valueZh: '林羅伯', valueEn: 'Robert LIN' },
+        { roleZh: '網站設計', roleEn: 'Website Design', valueZh: '林瀚寬', valueEn: 'LIN Han-Kuan' },
+        { roleZh: '靜態攝影', roleEn: 'Photo Documentation', valueZh: 'ANPIS FOTO 王世邦、林軒朗', valueEn: 'ANPIS FOTO Wang Shibang, LIN Hsuan-Lang' },
+        { roleZh: '動態攝影', roleEn: 'Video Documentation', valueZh: '異影業有限公司', valueEn: 'Un Studio Co., Ltd.' },
+        { roleZh: '前導影片剪輯', roleEn: 'Trailer Editing', valueZh: '浮石影像工作室', valueEn: 'FUSHIDA FILM STUDIO' }
+      ];
     }
   }
 }
@@ -153,12 +171,27 @@ export default {
   overflow-wrap: anywhere;
 }
 
-.team-rows {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 32px;
-  row-gap: 18px;
+.team-columns {
+  display: flex;
+  gap: 48px;
   margin-bottom: 60px;
+  align-items: flex-start;
+}
+
+.team-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.right-column {
+  padding-top: 0;
+  /* 右欄從第二個項目開始對齊，需要計算第一個項目的高度 */
+}
+
+.right-column .row:first-child {
+  margin-top: calc(1.9em + 18px); /* 對齊左欄第二個項目 */
 }
 
 .row {
@@ -194,6 +227,11 @@ export default {
   word-break: break-word;
 }
 
+.value-only {
+  margin-left: 0;
+  font-weight: 600;
+}
+
 /* 合作單位和贊助單位樣式 */
 .partners-section {
   // gap:20px;
@@ -225,14 +263,16 @@ export default {
   align-items: center;
 }
 
+/* 合作單位的 logo 間距更小 */
+.partner-group:last-child .partner-logos {
+  gap: 12px;
+}
+
 .partner-item {
-
-  align-items: center;
+  align-items:start;
   gap: 15px;
-
-
   border-radius: 8px;
-  min-width: 200px;
+  min-width: 180px;
   transition: all 0.3s ease;
 }
 
@@ -292,12 +332,27 @@ export default {
 @media (max-width: 768px) {
   .partners-section{flex-wrap: wrap;gap: 1em;}
   .container { padding: 16px 12px 48px; }
-  .team-rows { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .team-columns { 
+    flex-direction: column; 
+    gap: 32px; 
+    margin-bottom: 40px; 
+  }
+  .right-column .row:first-child {
+    margin-top: 0; /* 手機版取消偏移 */
+  }
   .row { line-height: 1.8; }
   .role { flex: 0 0 110px; font-size: 14px; }
   .value { font-size: 14px; -webkit-line-clamp: 3; }
+  /* 手機版：JHStudio 對齊內容區域 */
+  .value-only {
+    margin-left: calc(110px + 28px); /* 角色寬度 110px + 分隔符約 20px + 額外對齊 8px */
+  }
   .team.en .role { flex: 0 0 130px; font-size: 13px; white-space: normal; word-break: break-word; line-height: 1.4; }
   .team.en .value { font-size: 13px; -webkit-line-clamp: initial; }
+  /* 手機版英文：JHStudio 對齊內容區域 */
+  .team.en .value-only {
+    margin-left: calc(130px + 24px); /* 英文版角色寬度 130px + 分隔符約 16px + 額外對齊 8px */
+  }
   
   .partners-section {
     margin-top: 30px;

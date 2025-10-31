@@ -122,11 +122,28 @@ export default {
     animate();
 
     // === 窗口調整 ===
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+      renderer.setSize(width, height);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // 儲存清理函式以便卸載時移除監聽器
+    this._cleanupBannerParticles = () => {
+      window.removeEventListener('resize', handleResize);
+      if (renderer) {
+        renderer.dispose();
+      }
+    };
+  },
+  beforeUnmount() {
+    if (this._cleanupBannerParticles) {
+      this._cleanupBannerParticles();
+    }
   }
 };
 </script>
@@ -159,14 +176,16 @@ export default {
 
 @media (max-width:768px){
   .mobile{
-    height: 80vh;
-    width: 80vw;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    right: 0;
   }
   .mobile img{
-    height: 100vh; /* 避免手機瀏覽器 UI 影響顯示高度 */
-    width: 100vw;
-    /* overflow: hidden; */
-    object-fit:cover;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
   }
 }
 

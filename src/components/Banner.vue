@@ -9,6 +9,7 @@ export default {
   name: 'Ban-ner',
   mounted() {
     const container = this.$el;
+    const vm = this; // 保存 this 引用
 
     const loader = new THREE.TextureLoader();
     loader.load(require('@/assets/banner_bk.jpeg'), (texture) => {
@@ -95,6 +96,17 @@ export default {
       animate();
       window.addEventListener('resize', onResize);
       container.addEventListener('mousemove', onMouseMove);
+      
+      // 儲存清理函式以便卸載時移除監聽器
+      vm._cleanupBanner = () => {
+        window.removeEventListener('resize', onResize);
+        if (container) {
+          container.removeEventListener('mousemove', onMouseMove);
+        }
+        if (renderer) {
+          renderer.dispose();
+        }
+      };
     }
 
 
@@ -107,9 +119,21 @@ export default {
     }
 
     function onResize() {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      
+      // 更新 plane geometry 以適應新的視窗尺寸
+      if (plane && plane.geometry) {
+        const fov = (camera.fov * Math.PI) / 180;
+        const newHeight = 2 * Math.tan(fov / 2) * camera.position.z;
+        const newWidth = newHeight * camera.aspect;
+        plane.geometry.dispose();
+        plane.geometry = new THREE.PlaneGeometry(newWidth, newHeight);
+      }
     }
 
     function animate() {
@@ -124,6 +148,11 @@ export default {
     }
     
 
+  },
+  beforeUnmount() {
+    if (this._cleanupBanner) {
+      this._cleanupBanner();
+    }
   }
 };
 </script>
@@ -137,11 +166,10 @@ html, body {
 }
 #imageContainer {
   position: relative;
-  width: auto;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
   overflow-x: hidden;
-  /* object-fit: cover; */
 }
 
 @media (max-width:768px){
