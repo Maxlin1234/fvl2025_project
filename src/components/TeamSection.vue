@@ -228,8 +228,13 @@ export default {
 }
 
 .value-only {
-  margin-left: 0;
+  margin-left: calc(120px + 35px); /* 角色寬度 120px + 分隔符 20px */
   // font-weight: 600;
+}
+
+/* 英文版：JHStudio 對齊內容區域 */
+.team.en .value-only {
+  margin-left: calc(200px + 30px); /* 英文版角色寬度 200px + 分隔符 16px */
 }
 
 /* 合作單位和贊助單位樣式 */
