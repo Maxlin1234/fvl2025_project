@@ -77,8 +77,8 @@
             <h3 class="partner-title">{{ isEnglish ? 'Collaborator' : '合作單位' }}</h3>
             <div class="partner-logos">
           
-              <div class="partner-item">
-                <img src="../assets/logos/Anorchy.png" alt="安娜琪舞蹈劇場" class="partner-logo" />
+              <div class="partner-item" style="min-width: 0px;">
+                <img src="../assets/logos/Anorchy.png" alt="安娜琪舞蹈劇場" class="partner-logo" style="width:150px;" />
               </div>
 
               <div class="partner-item">
