@@ -7,7 +7,7 @@
       <div class="drawer-title">
         <img src="../assets/logos/fvl-logo2.png" class="fvl-logo">
         <h2 style="margin: 0;padding:10px;">{{ isEnglish ? 'C-LAB Future Vision Lab ' : 'C-LAB 未來視覺實驗室' }}</h2>
-        <p style="padding:10px;  letter-spacing:0;">{{ isEnglish ? 
+        <p>{{ isEnglish ? 
           'Sharing C-LAB Future Vision Lab\'s continuous promotion of experimental performance projects "FUTURE VISION LAB" since 2020, using digital experimental architecture to create a dome field (DOME), with the goal of exploring the visual limits of technology media. Over the past four years, more than 100 works have been performed. This project completed hardware and software upgrades in 2023, breaking through previous scales to create a diameter of 15 meters, Taiwan\'s only giant mobile outdoor immersive experience space "C-LAB Dome Theater". Audio and video hardware and software have undergone multiple iterations of development, overcoming the complexity of multiple technologies such as spherical curved surface projection correction, fusion, alignment, playback control and image pre-production. The total computing power of the immersive image projection system can reach 8K*8K ultra-high resolution; internally, a double-layer structure hides audio and video equipment, customizes new transparent projection film, and works with Taiwan Sound Laboratory to build a more complete 25.4-channel surround sound field environment.' : 
           'C-LAB 未來視覺實驗室著重對未來視覺議題的探討與突破，探索科技媒體的視覺極限為實驗目標，企圖勾勒出未來視覺的跨域願景。實驗室本身具備R＆D的能量，整合影像運算、拼接、軟硬體系統、環繞音場及建築結構設計等技術，除策劃展演及陪伴創作者以外，亦進行各項跨域實驗，持續開創視覺及創新科技的新視野。同時針對視覺領域結合AI技術進行多項研發與應用，特別著重在生成式AI結合當代藝術及未來視覺領域提出具有創新與實驗性展演作品或平台環境，並也持續融合新舊科技如VR／AR／XR、物聯網、大數據等，延續實驗室技術累積的研發能量，並與不同領域創作者進行共研、共製與共創機制，發展科技媒體實驗作品或展演，並建立開源的機制，意圖拋磚引玉以增進科技藝術領域在AI發展應用創新。' }}</p>
       </div>
@@ -95,7 +95,7 @@
           <button class="list-btn3" @click="toggleContent3()"><h2>{{ isEnglish ? 'Admission Information' : '索票資訊' }}</h2></button>
         </div>
         <div class="content-container">
-          <div class="lecture-list" v-if="showContentA" style="font-size: 15px;">
+          <div class="lecture-list" v-if="showContentA">
             <h2>{{ isEnglish ? 
               '⭓ Some performances contain intense strobe lighting effects. Viewer discretion is advised.' : 
               '⭓ 演出內容有部分包含強烈閃光，敬請斟酌入場。' }}</h2>
@@ -113,7 +113,7 @@
               '⭓ 主辦單位保有調整與變更活動之權利。' }}</h2>
     
           </div>
-          <div class="lecture-list" v-if="showContentB" style="font-size: 15px;">
+          <div class="lecture-list" v-if="showContentB">
             <h2>{{ isEnglish ? 
               '⭓ Commercial photography (e.g., wedding photos, product catalogs, photography teaching, etc.) or other photography that affects the safety and viewing quality of the venue is not allowed in the venue.' : 
               '⭓ 館內不開放商業攝影（例：婚紗、商品型錄、攝影教學等）或其他影響場館安全及參觀品質之拍攝。' }}</h2>
@@ -124,7 +124,7 @@
               '⭓ Please do not use flash, tripods, handheld stabilizers or selfie sticks and other professional equipment or auxiliary equipment for photography.' : 
               '⭓ 攝影請勿使用閃光燈、三腳架、手持穩定器或自拍棒等各式專業器材或輔助設備。' }}</h2>
           </div>
-          <div class="lecture-list" v-if="showContentC" style="font-size: 15px;">
+          <div class="lecture-list" v-if="showContentC">
             <h2>{{ isEnglish ? 
               '⭓ Ticket required for entry. One person, one ticket admission. ' : 
               '⭓ 每場次皆需事先索票，一人一票憑票入場。' }}</h2>
@@ -346,7 +346,8 @@ export default {
   width: 100vw;
   max-width: 100vw;
   height: 100vh;
-  background: #10ffdb;
+  overflow-y: hidden;
+  background: #000000;
   box-shadow: -4px 0 24px rgba(0,0,0,0.18);
   z-index: 1000;
   transform: translateX(100%);
@@ -451,7 +452,7 @@ export default {
   height:auto;
   z-index: 1001;
   color: #ffffff;
-  top: 10%;
+  top: 5%;
   left: 6%;
   font-size: 1rem;
   text-decoration: none;
@@ -474,6 +475,8 @@ export default {
   text-align: justify;
   letter-spacing: 0.2px;
   word-break: break-word;
+  padding:10px;  
+  letter-spacing:0;
 }
 
 .fvl-logo {
@@ -549,6 +552,7 @@ export default {
   margin-left: 40px;
   padding: 20px;
   gap: 20px;
+  font-size: 15px;
 }
 
 .carousel-container {
@@ -642,10 +646,12 @@ export default {
 @media (max-width: 768px) {
   .lecture-list{
     margin: 0;
+    font-size: 10px;
   }
+
   .list-text{
-    padding: 0;
-    margin-left: 1em;
+    padding:1em;
+    margin-left: 0.5em;
   }
   .carousel-container {
     display: none;
@@ -679,6 +685,9 @@ export default {
     padding: 16px;
     z-index: 1001;
     text-align: center;
+  }
+  .drawer-title p {
+    padding: 0;
   }
 
   .fvl-logo {
