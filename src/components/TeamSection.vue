@@ -229,7 +229,7 @@ export default {
 
 .value-only {
   margin-left: 0;
-  font-weight: 600;
+  // font-weight: 600;
 }
 
 /* 合作單位和贊助單位樣式 */
@@ -345,14 +345,15 @@ export default {
   .value { font-size: 14px; -webkit-line-clamp: 3; }
   /* 手機版：JHStudio 對齊內容區域 */
   .value-only {
-    margin-left: calc(110px + 28px); /* 角色寬度 110px + 分隔符約 20px + 額外對齊 8px */
+    margin-left: calc(110px + 36px); /* 角色寬度 110px + 分隔符約 20px + 額外對齊 8px */
   }
   .team.en .role { flex: 0 0 130px; font-size: 13px; white-space: normal; word-break: break-word; line-height: 1.4; }
   .team.en .value { font-size: 13px; -webkit-line-clamp: initial; }
   /* 手機版英文：JHStudio 對齊內容區域 */
   .team.en .value-only {
-    margin-left: calc(130px + 24px); /* 英文版角色寬度 130px + 分隔符約 16px + 額外對齊 8px */
+    margin-left: calc(130px + 30px); /* 英文版角色寬度 130px + 分隔符約 16px + 額外對齊 8px */
   }
+  
   
   .partners-section {
     margin-top: 30px;
