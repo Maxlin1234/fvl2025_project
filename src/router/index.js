@@ -13,7 +13,7 @@ const routes = [
     component: () => import( '../views/PortfolioDetil.vue') // 注意檔名也建議改正
   },
   {
-    path: '/works/:id',
+    path: '/works/:id/:slug?',
     name: 'WorkDetail',
     component: () => import('../views/PortfolioDetil.vue')
   },

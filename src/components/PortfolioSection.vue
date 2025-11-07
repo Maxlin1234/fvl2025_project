@@ -4,18 +4,33 @@
       <h2 class="section-title">{{ isEnglish ? 'Screening Works' : '播映作品' }}</h2>
       <div class="portfolio-grid" ref="grid">
         <div class="portfolio-item" v-for="(item, idx) in portfolioList" :key="idx">
-          <a :href="`/works/${item.id}`" target="_blank" rel="noopener" @click="cacheWork(item, idx)">
+          <router-link
+            v-if="hasWorkRoute(item)"
+            :to="getWorkRoute(item)"
+            class="portfolio-link"
+            @click="cacheWork(item, idx)"
+          >
             <div class="portfolio-image" style="height: 100%;">
               <img :src="'https://unzip-clab-api.clab.org.tw/' + item.photo_1" :alt="item.title" style="width: 100%;height: 100%;">
             </div>
-        
+
             <div class="portfolio-overlay">
               <h3>{{ isEnglish ? item.work_en.title : item.work_zh.title }}</h3>
               <!-- <p>{{item.work_zh.title }}({{item.work_en.title }})</p> -->
               <p>{{ isEnglish ? item.work_en.interactive_description : item.work_zh.interactive_description }}</p>
               <!-- <p>{{ isEnglish ? item.work_zh.photo_1_d : item.work_en.photo_1_d }}</p> -->
             </div>
-          </a>
+          </router-link>
+          <div v-else class="portfolio-link portfolio-link--disabled">
+            <div class="portfolio-image" style="height: 100%;">
+              <img :src="'https://unzip-clab-api.clab.org.tw/' + item.photo_1" :alt="item.title" style="width: 100%;height: 100%;">
+            </div>
+
+            <div class="portfolio-overlay">
+              <h3>{{ isEnglish ? item.work_en.title : item.work_zh.title }}</h3>
+              <p>{{ isEnglish ? item.work_en.interactive_description : item.work_zh.interactive_description }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -103,7 +118,12 @@ export default {
   methods: {
     cacheWork(item, idx) {
       try {
-        const key = `work_${item.id}`;
+        const workId = this.resolveWorkId(item);
+        if (!workId) {
+          console.warn('Work item missing id, skip caching.', item);
+          return;
+        }
+        const key = `work_${workId}`;
         const payload = { ...item, _listIndex: idx };
         localStorage.setItem(key, JSON.stringify(payload));
         const lang = localStorage.getItem('lang');
@@ -113,6 +133,52 @@ export default {
       } catch (e) {
         console.error('Failed to cache work detail:', e);
       }
+    },
+    getWorkRoute(item) {
+      const workId = this.resolveWorkId(item);
+      if (!workId) return null;
+      const slug = this.generateSlug(item, workId);
+      const params = { id: workId };
+      if (slug) {
+        params.slug = slug;
+      }
+      const query = { lang: this.isEnglish ? 'en' : 'zh' };
+      return { name: 'WorkDetail', params, query };
+    },
+    generateSlug(item, workId) {
+      const englishTitle = this.resolveEnglishTitle(item);
+      if (englishTitle) {
+        return englishTitle.trim();
+      }
+      const fallbackBase = item?.work_zh?.title || '';
+      if (fallbackBase) {
+        return this.slugify(fallbackBase) || `work-${workId}`;
+      }
+      return `work-${workId}`;
+    },
+    resolveEnglishTitle(item) {
+      const title = item?.work_en?.title || item?.title_en || item?.titleEn;
+      if (!title) return '';
+      return title.toString().trim();
+    },
+    slugify(text) {
+      return text
+        .toString()
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    },
+    hasWorkRoute(item) {
+      return Boolean(this.resolveWorkId(item));
+    },
+    resolveWorkId(item) {
+      const candidate = item?.id ?? item?.work_id ?? item?.workId ?? item?.workID;
+      if (candidate === undefined || candidate === null) return null;
+      const idString = String(candidate).trim();
+      return idString.length > 0 ? idString : null;
     }
   }
 }
@@ -151,6 +217,18 @@ export default {
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   /* 初始淡入狀態由JS設定 */
+}
+
+.portfolio-link {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.portfolio-link--disabled {
+  cursor: default;
+  pointer-events: none;
 }
 
 .portfolio-image {
