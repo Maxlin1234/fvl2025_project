@@ -17,21 +17,14 @@
   <!-- Drawer 結構 -->
   <div class="drawer" :class="{ open: showDrawer }">
     <button class="drawer-close" @click="$emit('close-drawer', 'schedule')">×</button>
-    <div class="tobe-contuine">
-    <div class="tobe-container" style="display: flex;justify-content: center;align-items: center;width: 100%;height:80vh;">
-        <h2 style="padding: 1em;">{{ isEnglish ? 'Schedule will be announced in mid-November' : '預計11月中公布' }}</h2>
-    </div>
-
-    </div>
-    <!-- //恢復Calender -->
-    <!-- <div class="drawer-content2">
+    <div class="drawer-content2">
       <div class="cal-page">
         <div class="cal-title">
           <h2 style="padding: 20px;color: #fff;">FUTURE VISION LAB <br>{{ isEnglish ? '2025 Schedule' : '2025 節目表' }}</h2>
           <Calendar @event-type-changed="handleEventTypeChange" />
-        </div> -->
+        </div>
         <!-- 輪播圖片區域 -->
-        <!-- <div class="carousel-container">
+        <div class="carousel-container">
           <div class="carousel-wrapper">
             <img 
               v-for="(image, index) in carouselImages" 
@@ -51,10 +44,9 @@
               @click="goToSlide(index)"
             ></button>
           </div>
-        </div> -->
-
-      <!-- </div>
-    </div> -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- 講座 Drawer 結構 -->
@@ -147,14 +139,12 @@
 </template>
 
 <script>
-//恢復Calender
-// import Calendar from './Calendar2.vue';
+import Calendar from './Calendar2.vue';
 
 export default {
   name: 'DraWers',
   components: {
-    //恢復Calender
-    // Calendar
+    Calendar
   },
   props: {
     showLiveDrawer: {
