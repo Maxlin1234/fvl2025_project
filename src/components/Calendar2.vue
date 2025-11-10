@@ -71,8 +71,8 @@ export default {
         { id: 26, date: '2025-12-14', time: '18:00', timeEn: '18:00', titleZh: '《巴別》\n《奶油金剛》\n《Metaract》', titleEn: 'Babel_Offline\nHollow Giant\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 5 },
 
         // Week 4
-        { id: 27, date: '2025-12-19', time: '16:00-19:00', timeEn: '16:00-19:00 (Exhibition)', titleZh: 'C-LAB 未來視覺實驗室 自製作品－《Echo of Presence》', titleEn: 'C-LAB Future Vision Lab in-house production "Echo of Presence"', location: 'C-LAB Future Vision Lab', locationEn: 'C-LAB Future Vision Lab', sortOrder: 1 },
-        { id: 28, date: '2025-12-20', time: '12:00-19:00', timeEn: '12:00-19:00 (Exhibition)', titleZh: 'C-LAB 未來視覺實驗室 自製作品－《Echo of Presence》', titleEn: 'C-LAB Future Vision Lab in-house production "Echo of Presence"', location: 'C-LAB Future Vision Lab', locationEn: 'C-LAB Future Vision Lab', sortOrder: 1 },
+        { id: 27, date: '2025-12-19', time: '16:00-19:00', timeEn: '16:00-19:00 (Exhibition)', titleZh: 'C-LAB 未來視覺實驗室 自製作品－《Echo of Presence》', titleEn: 'C-LAB Future Vision Lab in-house production "Echo of Presence"', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
+        { id: 28, date: '2025-12-20', time: '12:00-19:00', timeEn: '12:00-19:00 (Exhibition)', titleZh: 'C-LAB 未來視覺實驗室 自製作品－《Echo of Presence》', titleEn: 'C-LAB Future Vision Lab in-house production "Echo of Presence"', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
 
         { id: 29, date: '2025-12-21', time: '14:00', timeEn: '14:00', titleZh: '《巴別》\n《奶油金剛》\n《Metaract》', titleEn: 'Babel_Offline\nHollow Giant\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
         { id: 30, date: '2025-12-21', time: '15:00', timeEn: '15:00', titleZh: '《赤聲之曙》\n《水身萬象》', titleEn: 'Red Sunrise\nWater Always Goes Where It Wants to Go', location: 'DOME', locationEn: 'DOME', sortOrder: 2 },
