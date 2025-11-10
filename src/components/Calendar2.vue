@@ -10,8 +10,8 @@
           </div>
           <div class="event-content">
             <div class="titles">
-              <div class="title-zh">{{ evt.titleZh }}</div>
-              <div class="title-en">{{ evt.titleEn }}</div>
+              <div v-if="!isEnglish" class="title-zh">{{ evt.titleZh }}</div>
+              <div v-else class="title-en">{{ evt.titleEn }}</div>
             </div>
             <div class="meta">
               <span class="time">{{ isEnglish ? (evt.timeEn || evt.time) : evt.time }}</span>

@@ -21,7 +21,7 @@
       <div class="cal-page">
         <div class="cal-title">
           <h2 style="padding: 20px;color: #fff;">FUTURE VISION LAB <br>{{ isEnglish ? '2025 Schedule' : '2025 節目表' }}</h2>
-          <Calendar @event-type-changed="handleEventTypeChange" />
+          <Calendar :isEnglish="isEnglish" @event-type-changed="handleEventTypeChange" />
         </div>
         <!-- 輪播圖片區域 -->
         <div class="carousel-container">
