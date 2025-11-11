@@ -50,7 +50,7 @@
     <VideoBanner />
     <PortfolioSection :portfolioList="portfolioList" :isEnglish="isEnglish" />
     <TeamSection :isEnglish="isEnglish" />
-    <FooterBar />
+    <FooterBar :isEnglish="isEnglish" />
 
     <!-- 抽屜組件 -->
     <Drawers 

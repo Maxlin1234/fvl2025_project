@@ -3,10 +3,15 @@
     <div class="month" v-for="(month, mIdx) in groupedByMonth" :key="mIdx">
       <h3 class="month-title">{{ month.label }}</h3>
       <ul class="event-list">
-        <li v-for="evt in month.events" :key="evt.id" class="event-item" :class="{ alt: evt.id % 2 === 0 }">
+        <li
+          v-for="(evt, idx) in month.events"
+          :key="evt.id"
+          class="event-item"
+          :class="{ alt: idx % 2 === 1, 'has-date': isFirstOfDay(month.events, idx) }"
+        >
           <div class="event-date">
-            <div class="date">{{ formatDate(evt.date) }}</div>
-            <div class="weekday">{{ weekday(evt.date) }}</div>
+            <div class="date" v-if="isFirstOfDay(month.events, idx)">{{ formatDate(evt.date) }}</div>
+            <div class="weekday" v-if="isFirstOfDay(month.events, idx)">{{ weekday(evt.date) }}</div>
           </div>
           <div class="event-content">
             <div class="titles">
@@ -105,6 +110,12 @@ export default {
     }
   },
   methods: {
+    isFirstOfDay(events, index) {
+      if (index === 0) return true;
+      const current = events[index];
+      const previous = events[index - 1];
+      return current.date !== previous.date;
+    },
     formatMonthLabel(ym) {
       const [y, m] = ym.split('-').map(n => parseInt(n, 10));
       const monthZh = `${y}年${m}月`;

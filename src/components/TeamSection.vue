@@ -34,7 +34,7 @@
           <div class="partner-group">
             <h3 class="partner-title">{{ isEnglish ? 'Organizer ' : '主辦單位' }}</h3>
             <div class="partner-logos">
-              <div class="partner-item">
+              <div class="partner-item clab">
                 <img src="../assets/logos/clab.png" alt="臺灣當代文化實驗场 Taiwan Contemporary Culture Lab" class="partner-logo" />
                 <!-- <div class="partner-text">
                   <div class="partner-name-zh">臺灣當代文化實驗场</div>
@@ -64,7 +64,7 @@
             <div class="partner-logos">
               <div class="partner-item">
                 <img src="../assets/logos/fvl-logo2.png" alt="臺灣當代文化實驗场 Taiwan Contemporary Culture Lab" class="partner-logo" />
-                <div class="partner-logo-text"></div>
+                <!-- <div class="partner-logo-text"></div> -->
                 <!-- <div class="partner-text">
                   <div class="partner-name-en">TECHNOLOGY MEDIA PLATFORM</div>
                 </div> -->
@@ -77,11 +77,11 @@
             <h3 class="partner-title">{{ isEnglish ? 'Collaborator' : '合作單位' }}</h3>
             <div class="partner-logos">
           
-              <div class="partner-item" style="min-width: 0px;">
-                <img src="../assets/logos/Anorchy.png" alt="安娜琪舞蹈劇場" class="partner-logo" style="width:150px;" />
+              <div class="partner-item anorchy">
+                <img src="../assets/logos/Anorchy.png" alt="安娜琪舞蹈劇場" class="partner-logo" />
               </div>
 
-              <div class="partner-item">
+              <div class="partner-item shihchien" style="margin-right: 1em;">
                 <img src="../assets/logos/shihchien.png" alt="實踐大學媒體傳達設計學系" class="partner-logo" />
               </div>
 
@@ -251,6 +251,7 @@ export default {
 
 .partner-group {
   margin-bottom: 40px;
+  margin: 1em;
 }
 
 .partner-title {
@@ -264,9 +265,10 @@ export default {
 .partner-logos {
   display: flex;
   flex-wrap: nowrap;
-  gap: 24px;
+  // gap: 24px;
   align-items: center;
 }
+
 
 /* 合作單位的 logo 間距更小 */
 .partner-group:last-child .partner-logos {
@@ -274,12 +276,16 @@ export default {
 }
 
 .partner-item {
-  align-items:start;
-  gap: 15px;
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+
   border-radius: 8px;
-  min-width: 180px;
+  // min-width: 180px;
+  height: 100px;
   transition: all 0.3s ease;
 }
+
 
 // .partner-item:hover {
 //   background: #f0f0f0;
@@ -288,12 +294,26 @@ export default {
 // }
 
 .partner-logo {
-  width: 160px;
-  height: 60px;
+  height: 70px;
+  width: auto;
+  max-width: 240px;
   object-fit: contain;
   object-position: center;
   flex-shrink: 0;
 }
+
+.partner-item.clab .partner-logo {
+  max-width: 260px;
+}
+
+.partner-item.anorchy .partner-logo {
+  max-width: 200px;
+}
+
+// .partner-item.shihchien .partner-logo {
+//   max-width: 220px;
+//   scale: 1.3;
+// }
 
 .partner-logo-text {
   width: 160px;
@@ -335,7 +355,7 @@ export default {
 .team.en .value { font-size: 14px; display: block; -webkit-line-clamp: initial; -webkit-box-orient: initial; overflow: visible; word-break: break-word; white-space: normal; }
 
 @media (max-width: 768px) {
-  .partners-section{flex-wrap: wrap;gap: 1em;}
+  .partners-section{flex-wrap: wrap;gap: 1em;justify-content:flex-start}
   .container { padding: 16px 12px 48px; }
   .team-columns { 
     flex-direction: column; 
@@ -372,14 +392,19 @@ export default {
   
   .partner-item {
     min-width: 100%;
+    height: 80px;
     flex-direction: column;
-    text-align: center;
+    text-align: left;
     gap: 8px;
   }
   
   .partner-logo {
-    width: 140px;
-    height: 52px;
+    height: 60px;
+    width: auto;
+  }
+
+  .partner-title {
+    text-align: left;
   }
   
   .partner-logo-text {

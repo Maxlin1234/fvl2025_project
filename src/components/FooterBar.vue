@@ -1,14 +1,20 @@
 <template>
   <footer class="footer-bar">
     <div class="container">
-      <p>&copy; TAIWAN CONTEMPORARY CULTURE  LAB. 版權所有。</p>
+      <p>&copy; {{ isEnglish ? 'TAIWAN LIVING ARTS FOUNDATION All Rights Reserved' : '財團法人生活美學基金會 版權所有' }}</p>
     </div>
   </footer>
 </template>
 
 <script>
 export default {
-  name: 'FooterBar'
+  name: 'FooterBar',
+  props: {
+    isEnglish: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 
