@@ -252,7 +252,11 @@ export default {
       const tZh = work.value?.work_zh?.title || '';
       const tEn = work.value?.work_en?.title || '';
       const s = `${tZh} ${tEn}`;
-      return s.includes('沉浸式影音工作坊－實踐大學媒傳系成果呈現') || s.toLowerCase().includes('immersive audio-visual workshop');
+      return (
+        s.includes('沉浸式影音工作坊－實踐大學媒傳系成果呈現') ||
+        s.includes('C-LAB 未來視覺實驗室') ||
+        s.toLowerCase().includes('immersive audio-visual workshop')
+      );
     });
 
     const loadFromLocal = () => {
@@ -475,7 +479,8 @@ export default {
 
     img {
       width: 48%;
-      height: 200px;
+      aspect-ratio: 1 / 1;
+      height: auto;
       object-fit: cover;
       border-radius: 50%;
       border: 4px solid #ffffff;

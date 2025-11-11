@@ -63,7 +63,7 @@
             <h3 class="partner-title">{{ isEnglish ? 'Executive Organizer' : '執行單位' }}</h3>
             <div class="partner-logos">
               <div class="partner-item">
-                <img src="../assets/logos/fvl-logo2.png" alt="臺灣當代文化實驗场 Taiwan Contemporary Culture Lab" class="partner-logo" />
+                <img src="../assets/logos/fvl-logo2.png" alt="臺灣當代文化實驗场 Taiwan Contemporary Culture Lab" class="partner-logo " />
                 <!-- <div class="partner-logo-text"></div> -->
                 <!-- <div class="partner-text">
                   <div class="partner-name-en">TECHNOLOGY MEDIA PLATFORM</div>
@@ -81,7 +81,7 @@
                 <img src="../assets/logos/Anorchy.png" alt="安娜琪舞蹈劇場" class="partner-logo" />
               </div>
 
-              <div class="partner-item shihchien" style="margin-right: 1em;">
+              <div class="partner-item shihchien" style="margin-right: 1.5em;scale: 1.3;">
                 <img src="../assets/logos/shihchien.png" alt="實踐大學媒體傳達設計學系" class="partner-logo" />
               </div>
 
@@ -287,6 +287,7 @@ export default {
 }
 
 
+
 // .partner-item:hover {
 //   background: #f0f0f0;
 //   transform: translateY(-2px);
@@ -310,10 +311,6 @@ export default {
   max-width: 200px;
 }
 
-// .partner-item.shihchien .partner-logo {
-//   max-width: 220px;
-//   scale: 1.3;
-// }
 
 .partner-logo-text {
   width: 160px;
@@ -388,6 +385,7 @@ export default {
   .partner-logos {
     flex-direction: column;
     gap: 16px;
+    align-items: self-start;
   }
   
   .partner-item {

@@ -117,8 +117,8 @@
               '⭓ 攝影請勿使用閃光燈、三腳架、手持穩定器或自拍棒等各式專業器材或輔助設備。' }}</h2>
           </div>
           <div class="lecture-list" v-if="showContentC">
-            <h2>{{ isEnglish ? 'Admission Information' : '入場方式' }}</h2>
-            <h2>{{ isEnglish ? '【Screening & Live Performance】' : '【播映及現場演出】' }}</h2>
+            <!-- <h2>{{ isEnglish ? 'Admission Information' : '入場方式' }}</h2> -->
+            <h2 style="color: #81C1DF;">{{ isEnglish ? '【Screening & Live Performance】' : '【播映及現場演出】' }}</h2>
             <h2>{{ isEnglish ? '⭓ Ticket required for entry. One person, one ticket admission.' : '⭓ 每場次皆需事先索票，一人一票憑票入場。' }}</h2>
             <h2>{{ isEnglish ? '⭓ Please arrive at least 10 minutes before the performance or screening. Latecomers will not be admitted.' : '⭓ 每場播映/現場演出於開演前10分鐘開放入場，並不開放遲到觀眾入場。' }}</h2>
             <h2>{{ isEnglish ? '⭓ From Nov. 17th, tickets for the following weekend’s screenings will be released every Monday.' : '⭓ 11/17 起，每週一將開放〔隔週末展映場次〕索票，請密切追蹤把握。' }}</h2>
@@ -147,7 +147,7 @@
                 查詢。
               </span>
             </h2>
-            <h2>{{ isEnglish ? '【Exhibition】' : '【展覽】' }}</h2>
+            <h2 style="color: #81C1DF;">{{ isEnglish ? '【Exhibition】' : '【展覽】' }}</h2>
             <h2>{{ isEnglish ? 'Exhibition works include: Dec. 19-20 “C-LAB Future Vision Lab in-house production, Echo of Presence”.' : '展覽作品有：12/19-20｜C-LAB 未來視覺實驗室 自製作品－《Echo of Presence》' }}</h2>
             <h2>{{ isEnglish ? '▶ Entry will be granted in order of on-site queue until capacity is reached.' : '▶ 採現場排隊依序入場，場內人數額滿為止。' }}</h2>
             <h2>{{ isEnglish ? '▶ The maximum capacity is 100 people. If the venue is full, please wait for audiences exiting before entering according to the capacity control.' : '▶ 場內人數上限為100人，若額滿請等候場內觀眾離場後，依現場人數管制進場。' }}</h2>

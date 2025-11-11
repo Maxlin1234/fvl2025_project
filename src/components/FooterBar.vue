@@ -1,7 +1,7 @@
 <template>
   <footer class="footer-bar">
     <div class="container">
-      <p>&copy; {{ isEnglish ? 'TAIWAN LIVING ARTS FOUNDATION All Rights Reserved' : '財團法人生活美學基金會 版權所有' }}</p>
+      <p>&copy; {{ isEnglish ? 'TAIWAN LIVING ARTS FOUNDATION All Rights Reserved' : '財團法人台灣生活美學基金會 版權所有' }}</p>
     </div>
   </footer>
 </template>

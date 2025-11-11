@@ -7,7 +7,11 @@
           v-for="(evt, idx) in month.events"
           :key="evt.id"
           class="event-item"
-          :class="{ alt: idx % 2 === 1, 'has-date': isFirstOfDay(month.events, idx) }"
+          :class="{
+            alt: idx % 2 === 1,
+            'has-date': isFirstOfDay(month.events, idx),
+            'same-day': !isFirstOfDay(month.events, idx)
+          }"
         >
           <div class="event-date">
             <div class="date" v-if="isFirstOfDay(month.events, idx)">{{ formatDate(evt.date) }}</div>
@@ -170,6 +174,9 @@ export default {
   border-top: 1px dashed #0060b9;
 }
 .event-item.alt { background: #f5fbff; }
+.event-item + .event-item.same-day {
+  border-top: none;
+}
 
 .event-date { min-width: 140px; display: flex; flex-direction: column; gap: 2px; }
 .event-date .date { font-weight: 700; }
