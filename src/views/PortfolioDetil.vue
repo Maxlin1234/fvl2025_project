@@ -209,6 +209,14 @@ export default {
         if (indices.length === 2) return indices;
       }
 
+      // 規則 B：類數交界 → 坂本茉奈美 × 浦野百合
+      if (titleZh.includes('類數交界')) {
+        const a = findArtistIndexByZhName('坂本茉奈美');
+        const b = findArtistIndexByZhName('浦野百合');
+        const indices = [a, b].filter(i => typeof i === 'number' && i >= 0);
+        if (indices.length === 2) return indices;
+      }
+
   // 規則 B：「赫圖比斯：混沌的協奏」 → Normal Studio × 嬉皮萬歲
   if (titleZh.includes('赫圖比斯') || titleZh.includes('混沌的協奏')) {
     const a = findArtistIndexByZhName('Normal Studio');

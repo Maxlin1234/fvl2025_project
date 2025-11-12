@@ -44,17 +44,17 @@ export default {
       // Note: You can adjust/add entries as needed.
       events: [
         // Week 1
-        { id: 1, date: '2025-11-29', time: '14:00', timeEn: '14:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《Metaract》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
+        { id: 1, date: '2025-11-29', time: '14:00', timeEn: '14:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《類數交界》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
         { id: 2, date: '2025-11-29', time: '15:00', timeEn: '15:00', titleZh: '《巴別》\n《奶油金剛》\n《水身萬象》', titleEn: 'Babel_Offline\nHollow Giant\nWater Always Goes Where It Wants to Go', location: 'DOME', locationEn: 'DOME', sortOrder: 2 },
         { id: 3, date: '2025-11-29', time: '16:00', timeEn: '16:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', location: 'DOME', locationEn: 'DOME', sortOrder: 3 },
         { id: 4, date: '2025-11-29', time: '17:00', timeEn: '17:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《殘構重生》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nin s.asmbli', location: 'DOME', locationEn: 'DOME', sortOrder: 4 },
-        { id: 5, date: '2025-11-29', time: '18:00', timeEn: '18:00', titleZh: '《赤聲之曙》\n《Metaract》', titleEn: 'Red Sunrise\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 5 },
+        { id: 5, date: '2025-11-29', time: '18:00', timeEn: '18:00', titleZh: '《赤聲之曙》\n《類數交界》', titleEn: 'Red Sunrise\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 5 },
         { id: 6, date: '2025-11-29', time: '19:00', timeEn: '19:00', titleZh: '《巴別》\n《赫圖比斯：混沌的協奏》', titleEn: 'Babel_Offline\nHurtubise: Orchestrating Chaos', location: 'DOME', locationEn: 'DOME', sortOrder: 6 },
 
-        { id: 7, date: '2025-11-30', time: '14:00', timeEn: '14:00', titleZh: '《巴別》\n《奶油金剛》\n《Metaract》', titleEn: 'Babel_Offline\nHollow Giant\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
+        { id: 7, date: '2025-11-30', time: '14:00', timeEn: '14:00', titleZh: '《巴別》\n《奶油金剛》\n《類數交界》', titleEn: 'Babel_Offline\nHollow Giant\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 1 },
         { id: 8, date: '2025-11-30', time: '15:00', timeEn: '15:00', titleZh: '《赤聲之曙》\n《水身萬象》', titleEn: 'Red Sunrise\nWater Always Goes Where It Wants to Go', location: 'DOME', locationEn: 'DOME', sortOrder: 2 },
         { id: 9, date: '2025-11-30', time: '16:00', timeEn: '16:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', location: 'DOME', locationEn: 'DOME', sortOrder: 3 },
-        { id: 10, date: '2025-11-30', time: '17:00', timeEn: '17:00', titleZh: '《赤聲之曙》\n《Metaract》', titleEn: 'Red Sunrise\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 4 },
+        { id: 10, date: '2025-11-30', time: '17:00', timeEn: '17:00', titleZh: '《赤聲之曙》\n《類數交界》', titleEn: 'Red Sunrise\nMetaract', location: 'DOME', locationEn: 'DOME', sortOrder: 4 },
         { id: 11, date: '2025-11-30', time: '18:00', timeEn: '18:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《奶油金剛》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nHollow Giant', location: 'DOME', locationEn: 'DOME', sortOrder: 5 },
 
         // Week 2
@@ -68,11 +68,11 @@ export default {
         { id: 17, date: '2025-12-13', time: '15:00', timeEn: '15:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', location: 'DOME', locationEn: 'DOME', sortOrder: 2 },
         { id: 18, date: '2025-12-13', time: '16:00', timeEn: '16:00', titleZh: '《巴別》\n《奶油金剛》\n《水身萬象》', titleEn: 'Babel_Offline\nHollow Giant\nWater Always Goes Where It Wants to Go', location: 'DOME', locationEn: 'DOME', sortOrder: 3 },
         { id: 19, date: '2025-12-13', time: '17:00', timeEn: '17:00', titleZh: '《沉浸式影音工作坊－實踐大學媒傳系成果呈現》', titleEn: 'Immersive Audiovisual Workshop - Presentation', sortOrder: 4 },
-        { id: 20, date: '2025-12-13', time: '18:00', timeEn: '18:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《Metaract》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nMetaract', sortOrder: 5 },
+        { id: 20, date: '2025-12-13', time: '18:00', timeEn: '18:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《類數交界》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nMetaract', sortOrder: 5 },
         { id: 21, date: '2025-12-13', time: '19:00', timeEn: '19:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', sortOrder: 6 },
 
         { id: 22, date: '2025-12-14', time: '14:00', timeEn: '14:00', titleZh: '《赤聲之曙》\n《水身萬象》', titleEn: 'Red Sunrise\nWater Always Goes Where It Wants to Go', sortOrder: 1 },
-        { id: 23, date: '2025-12-14', time: '15:00', timeEn: '15:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《Metaract》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nMetaract', sortOrder: 2 },
+        { id: 23, date: '2025-12-14', time: '15:00', timeEn: '15:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《類數交界》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nMetaract', sortOrder: 2 },
         { id: 24, date: '2025-12-14', time: '16:00', timeEn: '16:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', sortOrder: 3 },
         { id: 25, date: '2025-12-14', time: '17:00', timeEn: '17:00', titleZh: '《沉浸式影音工作坊－實踐大學媒傳系成果呈現》', titleEn: 'Immersive Audiovisual Workshop - Presentation', sortOrder: 4 },
         { id: 26, date: '2025-12-14', time: '18:00', timeEn: '18:00', titleZh: '《巴別》\n《赤聲之曙》', titleEn: 'Babel_Offline\nRed Sunrise', sortOrder: 5 },
@@ -82,7 +82,7 @@ export default {
         { id: 28, date: '2025-12-20', time: '12:00-19:00（展覽）', timeEn: '12:00-19:00 (Exhibition)', titleZh: 'C-LAB 未來視覺實驗室 自製作品－《Echo of Presence》', titleEn: 'C-LAB Future Vision Lab in-house production "Echo of Presence"', sortOrder: 1 },
 
         { id: 29, date: '2025-12-21', time: '14:00', timeEn: '14:00', titleZh: '《巴別》\n《奶油金剛》\n《水身萬象》', titleEn: 'Babel_Offline\nHollow Giant\nWater Always Goes Where It Wants to Go', sortOrder: 1 },
-        { id: 30, date: '2025-12-21', time: '15:00', timeEn: '15:00', titleZh: '《赤聲之曙》\n《Metaract》', titleEn: 'Red Sunrise\nMetaract', sortOrder: 2 },
+        { id: 30, date: '2025-12-21', time: '15:00', timeEn: '15:00', titleZh: '《赤聲之曙》\n《類數交界》', titleEn: 'Red Sunrise\nMetaract', sortOrder: 2 },
         { id: 31, date: '2025-12-21', time: '16:00', timeEn: '16:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', sortOrder: 3 },
         { id: 32, date: '2025-12-21', time: '17:00', timeEn: '17:00', titleZh: '《昌勳與他的打字機》Dome穴遇言\n《奶油金剛》', titleEn: '"How can WE Perceive BODY with a Braille Typewriter?"  - Allegory of the cave\nHollow Giant', sortOrder: 4 },
         { id: 33, date: '2025-12-21', time: '18:00', timeEn: '18:00', titleZh: '《赫圖比斯：混沌的協奏》\n《殘構重生》', titleEn: 'Hurtubise: Orchestrating Chaos\nin s.asmbli', sortOrder: 5 },
