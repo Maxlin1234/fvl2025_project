@@ -162,6 +162,19 @@ export default {
       return artists.value.findIndex(a => a?.artist_zh?.name === zhName);
     };
 
+    const findArtistIndexByNames = (...names) => {
+      if (!Array.isArray(artists.value)) return -1;
+      const normalized = names
+        .filter(name => typeof name === 'string' && name.trim().length > 0)
+        .map(name => name.trim().toLowerCase());
+      if (!normalized.length) return -1;
+      return artists.value.findIndex(a => {
+        const zh = a?.artist_zh?.name?.trim()?.toLowerCase();
+        const en = a?.artist_en?.name?.trim()?.toLowerCase();
+        return normalized.includes(zh) || normalized.includes(en);
+      });
+    };
+
     const overrideArtistIndexForWork = computed(() => {
       const titleZh = work.value?.work_zh?.title || '';
       const titleEn = work.value?.work_en?.title || '';
@@ -211,8 +224,8 @@ export default {
 
       // 規則 B：類數交界 → 坂本茉奈美 × 浦野百合
       if (titleZh.includes('類數交界')) {
-        const a = findArtistIndexByZhName('坂本茉奈美');
-        const b = findArtistIndexByZhName('浦野百合');
+        const a = findArtistIndexByNames('坂本茉奈美', 'Manami SAKAMOTO');
+        const b = findArtistIndexByNames('浦野百合', 'Yuri URANO');
         const indices = [a, b].filter(i => typeof i === 'number' && i >= 0);
         if (indices.length === 2) return indices;
       }
