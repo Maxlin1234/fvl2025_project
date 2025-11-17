@@ -255,7 +255,14 @@ html, body {
   .bottom-right { bottom: calc(16px + env(safe-area-inset-bottom)); right: calc(16px + env(safe-area-inset-right)); }
 
   .banner-title {
-    bottom: 10%;
+    bottom: 20%;
+    left: -25%;
+    scale: 1.5;
+  }
+  .banner-title2{
+    bottom: 20%;
+    left:-20%;
+    scale: 1.45;
   }
 }
 </style>

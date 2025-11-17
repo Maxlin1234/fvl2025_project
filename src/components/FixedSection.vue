@@ -45,10 +45,10 @@ export default {
    position:absolute;
    display: flex;
    justify-content: center;
-   font-size: 1.5em;
+   font-size: 2em;
    bottom: 0;
    left: 50%;
-   width:50vw;
+   width:70%;
    background-color:#fff;
    z-index: 2;
    padding: 40px;
@@ -68,6 +68,9 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .title-box{
+    padding: 30px;
+  }
 .title-box h2{
   font-size: 0.6em;
 }
