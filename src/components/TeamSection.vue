@@ -81,7 +81,7 @@
                 <img src="../assets/logos/Anorchy.png" alt="安娜琪舞蹈劇場" class="partner-logo" />
               </div>
 
-              <div class="partner-item shihchien" style="margin-right: 1.5em;scale: 1.3;">
+              <div class="partner-item shihchien" style="margin-right: 1.5em;scale: 1.3;margin-left:2.5em;">
                 <img src="../assets/logos/shihchien.png" alt="實踐大學媒體傳達設計學系" class="partner-logo" />
               </div>
 
@@ -393,6 +393,7 @@ export default {
     height: 80px;
     flex-direction: column;
     text-align: left;
+    align-items: flex-start;
     gap: 8px;
   }
   

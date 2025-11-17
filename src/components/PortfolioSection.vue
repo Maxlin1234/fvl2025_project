@@ -40,7 +40,7 @@
 <script>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { onMounted, ref, nextTick } from 'vue';
+import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,12 +58,26 @@ export default {
   },
   setup() {
     const grid = ref(null);
+    let scrollTriggerInstance = null;
+    let resizeTimer = null;
 
     const buildRowFadeIn = () => {
       const container = grid.value;
       if (!container) return;
       const items = Array.from(container.querySelectorAll('.portfolio-item'));
       if (!items.length) return;
+
+      // 清理舊的 ScrollTrigger 實例
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
+        scrollTriggerInstance = null;
+      }
+
+      // 如果項目已經可見，跳過動畫
+      const firstItem = items[0];
+      if (firstItem && window.getComputedStyle(firstItem).opacity !== '0') {
+        return;
+      }
 
       // 初始狀態
       gsap.set(items, { opacity: 0, y: 24 });
@@ -84,9 +98,13 @@ export default {
         scrollTrigger: {
           trigger: '#portfolio',
           start: 'top 80%',
-          once: true
+          once: true,
+          markers: false
         }
       });
+
+      // 保存 ScrollTrigger 實例
+      scrollTriggerInstance = tl.scrollTrigger;
 
       rows.forEach((rowEls, i) => {
         tl.to(rowEls, {
@@ -97,6 +115,15 @@ export default {
           stagger: 0.08
         }, i * 0.18); // 每行間隔
       });
+    };
+
+    const handleResize = () => {
+      if (resizeTimer) {
+        clearTimeout(resizeTimer);
+      }
+      resizeTimer = setTimeout(() => {
+        buildRowFadeIn();
+      }, 250);
     };
 
     onMounted(async () => {
@@ -110,7 +137,18 @@ export default {
       }));
       Promise.all(waitAll).then(() => buildRowFadeIn());
       // 視窗尺寸改變時重新建立（避免斷行變化）
-      window.addEventListener('resize', buildRowFadeIn, { passive: true });
+      window.addEventListener('resize', handleResize, { passive: true });
+    });
+
+    onBeforeUnmount(() => {
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
+        scrollTriggerInstance = null;
+      }
+      if (resizeTimer) {
+        clearTimeout(resizeTimer);
+      }
+      window.removeEventListener('resize', handleResize);
     });
 
     return { grid };
