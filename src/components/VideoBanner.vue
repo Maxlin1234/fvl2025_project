@@ -20,7 +20,7 @@
       <source src="@/assets/dome.mp4" type="video/mp4" />
       Your browser does not support HTML5 video.
     </video>
-      <h2>FUTURE VISION LAB</h2>
+      <h2>FUTURE VISION LAB 2026</h2>
       
     </div>
   </div>
@@ -165,7 +165,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  font-size:22em;
+  font-size:18em;
   font-weight:900;
   text-align:left;
   line-height: 1.1cap;
