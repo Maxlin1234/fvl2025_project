@@ -22,7 +22,7 @@
     </video>
       <h2>
         <span class="text-block">FUTURE</span>
-        <span class="text-block" style="margin-left: 0.07em;">VISION</span>
+        <span class="text-block" style="margin-left: 0.07em;">VISION </span>
         <span class="text-block">LAB 2026</span>
       </h2>
       
