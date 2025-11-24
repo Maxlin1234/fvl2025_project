@@ -20,7 +20,11 @@
       <source src="@/assets/dome.mp4" type="video/mp4" />
       Your browser does not support HTML5 video.
     </video>
-      <h2>FUTURE VISION LAB 2026</h2>
+      <h2>
+        <span class="text-block">FUTURE</span>
+        <span class="text-block" style="margin-left: 0.07em;">VISION</span>
+        <span class="text-block">LAB 2026</span>
+      </h2>
       
     </div>
   </div>
@@ -174,13 +178,18 @@ export default {
   color: #000;
   background-color: #fff;
   margin: 0;
-  // padding-left:0.2em;
+  padding-left: 0.05em;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   -webkit-text-stroke: 15px #000;
   line-height:0.8em;
+}
+
+.banner h2 .text-block {
+  display: block;
+  width: 100%;
 }
 
 @media (max-width:768px){
